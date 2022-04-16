@@ -1,0 +1,26 @@
+# https://github.com/marketplace/actions/hub-mirror-action
+on:
+  push:
+  # 每天早上十点更新仓库
+  schedule:
+    - cron: '0 2 * * *'
+name: Update gitee
+jobs:
+  run:
+    name: Run
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout source codes
+      uses: actions/checkout@v1
+    - name: Mirror Github to Gitee with white list
+      uses: ./.
+      with:
+        src: github/ZHYCarge
+        dst: gitee/zhycarge
+        dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
+        dst_token:  ${{ secrets.GITEE_TOKEN }}
+        static_list: 'test'
+        #white_list: ''
+        force_update: true
+        debug: true
+        #mappings: 'hashes=>hashes_gitee'
