@@ -22,6 +22,6 @@ jobs:
         #static_list: 'test'
         black_list: 'actions,photo,ZHYCarge.github.io,notes'
         #white_list: ''
-        force_update: true
-        debug: true
+        force_update: false
+        debug: false
         #mappings: 'hashes=>hashes_gitee'
