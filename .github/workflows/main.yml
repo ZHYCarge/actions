@@ -1,6 +1,7 @@
 # https://github.com/marketplace/actions/hub-mirror-action
 on:
-  #push:
+  push:
+  # 加入其方便进行推送仓库
   # 每天早上十点更新仓库
   schedule:
     - cron: '0 2 * * *'
