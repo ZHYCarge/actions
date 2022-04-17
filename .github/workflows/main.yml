@@ -1,9 +1,10 @@
 # https://github.com/marketplace/actions/hub-mirror-action
 on:
-  push:
+  #push:
   # 每天早上十点更新仓库
   schedule:
     - cron: '0 2 * * *'
+    - cron: '0 13 * * *'
 name: Update gitee
 jobs:
   run:
@@ -17,7 +18,8 @@ jobs:
         dst: gitee/zhycarge
         dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
         dst_token:  ${{ secrets.GITEE_TOKEN }}
-        static_list: 'test'
+        #static_list: 'test'
+        black_list: 'actions,photo,ZHYCarge.github.io,notes'
         #white_list: ''
         force_update: true
         debug: true
