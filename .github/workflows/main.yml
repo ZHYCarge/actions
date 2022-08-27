@@ -9,9 +9,11 @@ on:
 name: Update gitee
 jobs:
   run:
-    name: Sync-GitHub-to-Gitee
     runs-on: ubuntu-latest
     steps:
+    - name: Get repository list exclude private and fork
+      id: repo
+      uses: yi-Xu-0100/repo-list-generator@v1.0.1
     - name: Mirror the Github repos to Gitee.
       uses: Yikun/hub-mirror-action@master
       with:
@@ -21,7 +23,7 @@ jobs:
         dst_token:  ${{ secrets.GITEE_TOKEN }}
         #static_list: 'test'
         black_list: 'actions,photo,ZHYCarge.github.io,notes'
+        static_list: ${{ steps.repo.outputs.repoList }}
         #white_list: ''
         force_update: false
         debug: false
-        #mappings: 'hashes=>hashes_gitee'
