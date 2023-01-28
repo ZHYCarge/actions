@@ -1,6 +1,6 @@
 # https://github.com/marketplace/actions/hub-mirror-action
 on:
-  push:
+  # push:
   # 加入其方便进行推送仓库
   # 每天早上十点更新仓库
   schedule:
@@ -22,7 +22,7 @@ jobs:
         dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
         dst_token:  ${{ secrets.GITEE_TOKEN }}
         #static_list: 'test'
-        black_list: 'actions,photo,ZHYCarge.github.io,notes'
+        black_list: 'actions,photo,ZHYCarge.github.io,notes,SundryBox'
         static_list: ${{ steps.repo.outputs.repoList }}
         #white_list: ''
         force_update: false
