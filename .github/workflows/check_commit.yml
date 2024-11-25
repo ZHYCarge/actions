@@ -3,6 +3,7 @@ name: Check Monthly Commits
 on:
   schedule:
     - cron: '0 1 20 * *'  # 每月的第20天 01:00 触发 UTC
+  workflow_dispatch:
 
 jobs:
   check_commits:
