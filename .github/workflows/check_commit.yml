@@ -42,9 +42,9 @@ jobs:
           username: ${{ secrets.MAIL_USERNAME }}
           password: ${{ secrets.MAIL_PASSWORD }}
           # 标题
-          subject: $current_month 月还未进行代码更新
+          subject: "${{ current_month }}月 鸽子小提醒"
           # 发送的内容
-          body: 在 $current_month 月，你还未进行更新个人博客，请记得更新
+          body: "在${{ current_month }}月内，你还未进行个人博客更新，生活再苦，也不要忘记做牛马"
           # 目标邮箱
           to: <${{ secrets.TO_MAIL_USERNAME }}>
           from: ZHYCarge's AutoRun <${{ secrets.MAIL_USERNAME }}>
