@@ -1,0 +1,50 @@
+name: Check Monthly Commits
+
+on:
+  schedule:
+    - cron: '0 1 20 * *'  # 每月的第20天 01:00 触发 UTC
+
+jobs:
+  check_commits:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        with:
+          repository: ZHYCarge/ZHYCarge.github.io  # 指定仓库
+          token: ${{ secrets.GITHUB_TOKEN }}  # 使用 GitHub 提供的令牌
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+
+      - name: Check for commits in the current month
+        id: check_commits
+        run: |
+          # 获取当前月份
+          current_month=$(date +'%Y-%m')
+          # 检查是否有提交
+          commit_count=$(git rev-list --count --since="$current_month-01" HEAD)
+          echo "Commit count for the month: $commit_count"
+          echo "::set-output name=commit_count::$commit_count"
+
+      - name: Send mail
+        if: steps.check_commits.outputs.commit_count == '0'
+        uses: dawidd6/action-send-mail@v2
+        with:
+          # SMTP 服务器地址
+          server_address: smtp.qiye.aliyun.com
+          server_port: 465
+          # 账号密码
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          # 标题
+          subject: $current_month 月还未进行代码更新
+          # 发送的内容
+          body: 在 $current_month 月，你还未进行更新个人博客，请记得更新
+          # 目标邮箱
+          to: <${{ secrets.TO_MAIL_USERNAME }}>
+          from: ZHYCarge's AutoRun <${{ secrets.MAIL_USERNAME }}>
+          content_type: text/plain
