@@ -35,7 +35,7 @@ jobs:
           # echo "::set-output name=current_month::$current_month"  # 设置 current_month 输出
 
       - name: Send mail
-        if: $commit_count == '0'
+        if: "$commit_count == '0'"
         uses: dawidd6/action-send-mail@v2
         with:
           # SMTP 服务器地址
