@@ -30,6 +30,7 @@ jobs:
           commit_count=$(git rev-list --count --since="$current_month-01" HEAD)
           echo "Commit count for the month: $commit_count"
           echo "::set-output name=commit_count::$commit_count"
+          echo "::set-output name=current_month::$current_month"  # 设置 current_month 输出
 
       - name: Send mail
         if: steps.check_commits.outputs.commit_count == '0'
@@ -42,10 +43,10 @@ jobs:
           username: ${{ secrets.MAIL_USERNAME }}
           password: ${{ secrets.MAIL_PASSWORD }}
           # 标题
-          subject: "${{ current_month }}月 鸽子小提醒"
+          subject: "${{ steps.check_commits.outputs.current_month }}月 鸽子小提醒"
           # 发送的内容
-          body: "在${{ current_month }}月内，你还未进行个人博客更新，生活再苦，也不要忘记做牛马"
+          body: "在${{ steps.check_commits.outputs.current_month }}月内，你还未进行个人博客更新，生活再苦，也不要忘记做牛马"
           # 目标邮箱
-          to: <${{ secrets.TO_MAIL_USERNAME }}>
-          from: ZHYCarge's AutoRun <${{ secrets.MAIL_USERNAME }}>
+          to: ${{ secrets.TO_MAIL_USERNAME }}
+          from: "ZHYCarge's AutoRun <${{ secrets.MAIL_USERNAME }}>"
           content_type: text/plain
